@@ -1,0 +1,16 @@
+datasets==2.18.0
+efficientnet_pytorch==0.7.1
+faculty_sphinx_theme==0.3.1
+inplace_abn==1.1.0
+mock==5.1.0
+nibabel==5.2.1
+numpy==1.26.4
+patchify==0.2.3
+pretrainedmodels==0.7.4
+pytest==8.1.1
+setuptools==59.6.0
+sphinx_rtd_theme==2.0.0
+timm==0.9.16
+torch==2.2.1
+torchvision==0.17.1
+tqdm==4.66.2

@@ -92,8 +92,11 @@ def load_aeropath():
                     # nib.save(patch_scan, 'test_scan.nii.gz')
                     # print(type(patch_scan))
 
-                    np.save('./dataset/scans/'+scan_name + f'_{i}_{j}_{k}' + '.npy', patch_scan)
-                    np.save('./dataset/airways/'+scan_name + f'_{i}_{j}_{k}' + '.npy', patch_mask)
+                    # np.save('./dataset/scans/'+scan_name + f'_{i}_{j}_{k}' + '.npy', patch_scan)
+                    # np.save('./dataset/airways/'+scan_name + f'_{i}_{j}_{k}' + '.npy', patch_mask)
+
+                    # print(patch_mask.shape)
+                    print(patch_scan.shape)
                         
         #             all_ct_scan_patches.append(patch_scan)
         #             all_ct_mask_patches.append(patch_mask)
