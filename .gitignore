@@ -161,3 +161,7 @@ cython_debug/
 
 *.npy
 lightning_logs/
+
+
+# Visual Studio Code ignore
+.vscode/*
