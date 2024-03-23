@@ -1,5 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "./segmentation_models.pytorch.3d"
-    ]
-}
