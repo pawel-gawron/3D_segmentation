@@ -7,6 +7,7 @@ import numpy as np
 from nibabel.processing import resample_to_output
 from concurrent.futures import ThreadPoolExecutor
 from patchify import patchify
+import torch 
 
 # @profile
 def load_aeropath():
@@ -27,25 +28,26 @@ def load_aeropath():
         scan_name = str(large_image['ct']).split('/')[-1].split('.')[0]
 
         ct_image = nib.load(large_image["ct"])
-        print("Type1: ", type(ct_image))
+        # print("Type1: ", type(ct_image))
         ct_image = resample_to_output(ct_image, order=1)
-        print("Type2: ", type(ct_image))
+        # print("Type2: ", type(ct_image))
 
         # nib.save(ct_image, 'test.nii.gz')
         
         ct_data_scan = ct_image.get_fdata().astype("int16")
-        print("Type3: ", type(ct_data_scan))
-        ct_data_scan[ct_data_scan < -1024] = -1024
+        # print("max: ", np.max(ct_data_scan))
+        # print("min: ", np.min(ct_data_scan))
+        # print("Type3: ", type(ct_data_scan))
+        # ct_data_scan[ct_data_scan < -1024] = -1024
         ct_data_scan[ct_data_scan > 400] = 400
+
+        # print("shape: ", ct_data_scan.shape)
 
         print("FINISH LOADING CT SCAN")
         # ct_data_scan = (ct_data_scan - np.min(ct_data_scan)) / (np.max(ct_data_scan) - np.min(ct_data_scan))
 
         # ct_data_scan = ct_data_scan.astype(np.float16)
         # ct_data_scan = np.clip(ct_data_scan, 0, 255).astype("uint8")
-
-        # print("max: ", np.max(ct_data_scan))
-        # print("min: ", np.min(ct_data_scan))
         # print("type:", ct_data_scan[0].dtype)
 
         ct_data_scan = ct_data_scan + 1024
@@ -57,13 +59,16 @@ def load_aeropath():
 
         ct_mask = nib.load(large_image["airways"])
         ct_mask = resample_to_output(ct_mask, order=1)
-        ct_data_mask = ct_mask.get_fdata().astype("uint8")
+        ct_data_mask = ct_mask.get_fdata().astype("int16")
+
+        # print("max: ", np.max(ct_data_mask))
+        # print("min: ", np.min(ct_data_mask))
 
         print("FINISH LOADING CT MASK")
 
         percent_size_x = 0.5  # Przykładowo 20% w osi X
         percent_size_y = 0.5  # Przykładowo 20% w osi Y
-        fixed_size_z = 50  # Stała liczba sliców w osi Z
+        fixed_size_z = 20  # Stała liczba sliców w osi Z
 
         scan_shape = ct_data_scan.shape
 
@@ -88,15 +93,20 @@ def load_aeropath():
                 for k in range(patches_scan.shape[2]):
                     patch_scan = patches_scan[i, j, k, :, :, :]
                     patch_mask = patches_mask[i, j, k, :, :, :]
+                    # patch_mask = torch.tensor(patch_mask).long()
 
                     # nib.save(patch_scan, 'test_scan.nii.gz')
                     # print(type(patch_scan))
 
-                    # np.save('./dataset/scans/'+scan_name + f'_{i}_{j}_{k}' + '.npy', patch_scan)
-                    # np.save('./dataset/airways/'+scan_name + f'_{i}_{j}_{k}' + '.npy', patch_mask)
+                    np.save('./dataset/scans/'+scan_name + f'_{i}_{j}_{k}' + '.npy', patch_scan)
+                    np.save('./dataset/airways/'+scan_name + f'_{i}_{j}_{k}' + '.npy', patch_mask)
 
                     # print(patch_mask.shape)
-                    print(patch_scan.shape)
+                    # print("patch_scan.shape:", patch_scan.shape)
+                    # print("patch_mask.shape:", patch_mask.shape)
+
+                    # print("patch_scan type:", type(patch_scan))
+                    # print("patch_mask type:", type(patch_mask))
                         
         #             all_ct_scan_patches.append(patch_scan)
         #             all_ct_mask_patches.append(patch_mask)
