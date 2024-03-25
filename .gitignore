@@ -160,6 +160,7 @@ cython_debug/
 #.idea/
 
 *.npy
+MONAI_DATA_DIRECTORY/
 lightning_logs/
 
 
