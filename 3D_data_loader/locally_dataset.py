@@ -68,7 +68,7 @@ def load_aeropath():
 
         percent_size_x = 0.5  # Przykładowo 20% w osi X
         percent_size_y = 0.5  # Przykładowo 20% w osi Y
-        fixed_size_z = 20  # Stała liczba sliców w osi Z
+        fixed_size_z = 32  # Stała liczba sliców w osi Z
 
         scan_shape = ct_data_scan.shape
 
