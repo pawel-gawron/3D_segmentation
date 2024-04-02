@@ -66,11 +66,13 @@ def load_aeropath():
 
         print("FINISH LOADING CT MASK")
 
-        percent_size_x = 0.5  # Przykładowo 20% w osi X
-        percent_size_y = 0.5  # Przykładowo 20% w osi Y
-        fixed_size_z = 32  # Stała liczba sliców w osi Z
+        percent_size_x = 1.0  # Przykładowo 20% w osi X
+        percent_size_y = 1.0  # Przykładowo 20% w osi Y
+        fixed_size_z = 64  # Stała liczba sliców w osi Z
 
         scan_shape = ct_data_scan.shape
+
+        # print("scan_shape: ", scan_shape)
 
         patch_size_x = min(int(round(scan_shape[0] * percent_size_x)), scan_shape[0])
         patch_size_y = min(int(round(scan_shape[1] * percent_size_y)), scan_shape[1])
@@ -93,10 +95,11 @@ def load_aeropath():
                 for k in range(patches_scan.shape[2]):
                     patch_scan = patches_scan[i, j, k, :, :, :]
                     patch_mask = patches_mask[i, j, k, :, :, :]
-                    # patch_mask = torch.tensor(patch_mask).long()
 
                     # nib.save(patch_scan, 'test_scan.nii.gz')
                     # print(type(patch_scan))
+
+                    # print("scan patch shape", patch_scan.shape)
 
                     np.save('./dataset/scans/'+scan_name + f'_{i}_{j}_{k}' + '.npy', patch_scan)
                     np.save('./dataset/airways/'+scan_name + f'_{i}_{j}_{k}' + '.npy', patch_mask)
