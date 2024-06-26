@@ -1,4 +1,4 @@
-datasets==2.18.0
+datasets==2.20.0
 efficientnet_pytorch==0.7.1
 faculty_sphinx_theme==0.3.1
 inplace_abn==1.1.0
