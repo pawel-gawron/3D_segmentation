@@ -170,3 +170,5 @@ lightning_logs/
 
 AeroPath
 Task09_Spleen
+chekpoints
+*.ckpt
